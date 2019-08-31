@@ -37,4 +37,11 @@ Route::get('/home', ['uses'=>'HomeController@index'])->name('home');
 Route::get('/users', ['uses'=>'HomeController@userlist'])->name('userlist');
 Route::get('/createComplaints', ['uses'=>'HomeController@createComplaints'])->name('createcomplaints');
 Route::post('/savepost', ['uses'=>'PostController@savepost'])->name('savepost');
+Route::get('/createPoll','PostController@createpoll');
+
+
+Route::get('/post/view/{id}','PostController@getpostdetails')->name('posts.view');
+Route::post('/post/comments','PostController@getcomments')->name('loadcomments');
+Route::post('/post/comments/add','PostController@addcomment')->name('addcomment');
+
 });

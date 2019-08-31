@@ -11,6 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -18,6 +19,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('assets/css/parsley.css') }}" rel="stylesheet"/>
     <script src="{{ URL::asset('assets/js/jquery-1.9.1.js') }}" type="text/javascript"></script>
 

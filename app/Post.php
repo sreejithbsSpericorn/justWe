@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -31,5 +32,16 @@ class Post extends Authenticatable
      *
      * @var array
      */
+
+    public function getCreatedAtAttribute($date){
+        try {
+            $data = Carbon::parse($date)->diffForHumans();
+            
+        } catch (\Exception $e) {
+            $data = $date;
+        }
+
+       return ($data);
+    }
     
 }
