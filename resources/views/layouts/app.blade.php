@@ -284,7 +284,7 @@ dt {
         </nav>
 
         <main class="py-4 main-menu-outer">
-
+            @if(Auth::user()->user_type == 1)
             <div class="main-menu-con">
                 <div class="container">
                     <ul class="main-menu">
@@ -300,6 +300,7 @@ dt {
                     </ul>
                 </div>
             </div>
+            @endif
 
             @yield('content')
             

@@ -109,8 +109,22 @@
 @stop
 
 @section('custom_scripts')
+<script src="//js.pusher.com/3.1/pusher.min.js"></script>
 
 <script type="text/javascript">
+  var pusher = new Pusher('09143f0b85f847fa4a08', {
+    encrypted: true
+  });
+
+// Subscribe to the channel we specified in our Laravel Event
+var channel = pusher.subscribe('postsave');
+
+// Bind a function to a Event (the full Laravel class)
+channel.bind('App\\Events\\Postsave', function(data) {
+    // this is called when the event notification is received...
+//alert(1);
+loadPosts();
+});
 
     var post_type;
     // var page_num = 0;

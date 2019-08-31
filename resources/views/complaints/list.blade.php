@@ -56,6 +56,21 @@
 
 
 <script>
+
+  var pusher = new Pusher('09143f0b85f847fa4a08', {
+    encrypted: true
+  });
+
+// Subscribe to the channel we specified in our Laravel Event
+var channel = pusher.subscribe('complaint');
+
+// Bind a function to a Event (the full Laravel class)
+channel.bind('App\\Events\\Complaint', function(data) {
+    // this is called when the event notification is received...
+//alert(1);
+var page = $(".pagination li.active span.page-link").text();
+ postlist(page);
+});
 $(document).ready(function()
 {
 

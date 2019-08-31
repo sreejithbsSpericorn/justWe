@@ -11,7 +11,9 @@
 |
 */
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', function(){
+	return view('welcome');
+});
 
 Route::get('/pusher', function() {
     event(new App\Events\UserListing('Hi there Pusher!'));
@@ -28,7 +30,7 @@ Route::get('auth/google', 'Auth\LoginController@redirectToGoogle');
 Route::get('auth/google/callback', 'Auth\LoginController@handleGoogleCallback');
 
 Route::group(['middleware' => ['auth']], function() {
-	
+
 	Route::get('/home', ['uses'=>'HomeController@index'])->name('home');
 	Route::get('/users', ['uses'=>'HomeController@userlist'])->name('userlist');
 	Route::get('/createComplaints', ['uses'=>'HomeController@createComplaints'])->name('createcomplaints');

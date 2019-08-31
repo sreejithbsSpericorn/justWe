@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
-
+use App\Events\Complaint;
+use App\Events\Postsave;
 class PostController extends Controller
 {
     /**
@@ -89,7 +90,8 @@ class PostController extends Controller
         }
 
         $post->save();
-
+       
+       event(new Postsave('Hi there Pusher!'));
         return response()->json(array("status" => true));
     }
 
@@ -112,6 +114,7 @@ class PostController extends Controller
             'post_type' => 4
         );
         Post::create($data);
+        event(new Complaint('Hi there Pusher!'));
         return response(['status' => 'success', 'message' => 'Complaints created successfully']);
     }
 

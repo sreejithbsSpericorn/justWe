@@ -12,7 +12,7 @@ use Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
-
+use App\Events\Postsave;
 use App\PostType;
 
 class HomeController extends Controller
@@ -35,7 +35,8 @@ class HomeController extends Controller
     public function index()
     {
       if(Auth::user()->user_type == 3){
-        return view('home');
+        $post_types = PostType::where('status', 0)->get();
+        return view('home' ,compact('post_types'));
       }else{
         return view('errors.403');
       }
@@ -159,7 +160,7 @@ public function savepoll(Request $request)
      print json_encode(array('status'=>'failed','message'=>$validator->errors()->first()));
      exit();
  }
- $data =  array('user_id' =>Auth::user()->id,'post_type' =>3, $input['title'],'title' => $input['title'],'expire_date' =>$input['expiry_date'] );
+ $data =  array('user_id' =>Auth::user()->id,'post_type' =>3,'title' => $input['title'],'expire_date' =>$input['expiry_date'] );
 
   $post = Post::create($data);
  if ($request->hasFile('image')) {
@@ -180,6 +181,8 @@ public function savepoll(Request $request)
     );
     DB::table('post_options')->insert($datas);
   }
+  
+  event(new Postsave('Hi there Pusher!'));
     print json_encode(array('status'=>'success','message'=>'Poll Created Succesfully'));
 
  
