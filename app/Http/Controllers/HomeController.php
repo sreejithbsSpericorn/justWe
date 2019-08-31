@@ -27,6 +27,12 @@ class HomeController extends Controller
       $this->middleware('auth');
     }
 
+    public function profile(){
+      $user = Auth::user();
+      $posts = Post::where('user_id', $user->id)->latest()->get();
+      return view('profile', compact('user', 'posts'));
+    }
+
     /**
      * Show the application dashboard.
      *
@@ -152,11 +158,11 @@ public function savepoll(Request $request)
   $input = $request->all();
   $validator = Validator::make($input, [
     'title' => 'required| min:10',
-    
+
  ]);
 
  if($validator->fails()){
-    
+
      print json_encode(array('status'=>'failed','message'=>$validator->errors()->first()));
      exit();
  }
@@ -171,21 +177,21 @@ public function savepoll(Request $request)
       $post->image = '/uploads/posts/' . $name;
       $post->save();
   }
-  
+
   $option = $request->input('option');
-  
+
   foreach ($option as $value) {
     $datas=array(
-        'post_id'     => $post->id, 
+        'post_id'     => $post->id,
         'options'   =>$value
     );
     DB::table('post_options')->insert($datas);
   }
-  
+
   event(new Postsave('Hi there Pusher!'));
     print json_encode(array('status'=>'success','message'=>'Poll Created Succesfully'));
 
- 
+
  }
  public function GetPollmodal(Request $request)
  {

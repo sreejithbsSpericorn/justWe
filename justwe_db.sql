@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 31, 2019 at 03:21 PM
+-- Generation Time: Aug 31, 2019 at 08:27 PM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.9
 
@@ -40,7 +40,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `GetPosts` (IN `_post_type` INT, IN 
                SELECT posts.* ,COUNT(post_comments.id) AS no_comments,GROUP_CONCAT( CONCAT(post_options.options, ' - ', post_options.id)  SEPARATOR ',') AS poll_options  FROM `posts` LEFT JOIN `post_comments` on `post_comments`.`post_id` = `posts`.`id`  LEFT JOIN `post_options` on FIND_IN_SET(`posts`.`id`,`post_options`.`post_id`) WHERE ( posts.expire_date >= CURDATE() OR posts.expire_date IS  NULL) AND posts.post_type !=4 group by `post_comments`.`id`,`posts`.`id`order by `post_comments`.`id` DESC,`posts`.`id` DESC;
      ELSEIF _post_type != 0 AND _post_id = 0 THEN
        
-          SELECT posts.* ,COUNT(post_comments.id) AS no_comments,GROUP_CONCAT(CONCAT(post_options.options, ' - ', post_options.id)  SEPARATOR ',') AS poll_options  FROM `posts` LEFT JOIN `post_comments` on `post_comments`.`post_id` = `posts`.`id`  LEFT JOIN `post_options` on FIND_IN_SET(`posts`.`id`,`post_options`.`post_id`) WHERE ( posts.expire_date >= CURDATE() OR posts.expire_date IS  NULL) AND posts.post_type =_post_type group by `post_comments`.`id`,`posts`.`id`order by `post_comments`.`id` DESC,`posts`.`id` DESC;
+          SELECT posts.* ,COUNT(post_comments.id) AS no_comments,GROUP_CONCAT(CONCAT(post_options.options, ' - ', post_options.id)  SEPARATOR ',') AS poll_options  FROM `posts` LEFT JOIN `post_comments` on `post_comments`.`post_id` = `posts`.`id`  LEFT JOIN `post_options` on FIND_IN_SET(`posts`.`id`,`post_options`.`post_id`) WHERE  posts.post_type =_post_type group by `post_comments`.`id`,`posts`.`id`order by `post_comments`.`id` DESC,`posts`.`id` DESC;
           
       
      
@@ -56,12 +56,12 @@ END$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetUsers` (IN `_type_id` INT, IN `_user_id` INT)  BEGIN
      IF _user_id!=0 THEN
       
-        SELECT * FROM users WHERE active = 0 AND id=_user_id;
+        SELECT * FROM users WHERE is_delete = 0 AND id=_user_id;
           
       
      ELSE
        
-         SELECT * FROM users WHERE active = 0 AND user_type =_type_id ;
+         SELECT * FROM users WHERE is_delete = 0 AND user_type =_type_id ;
       END IF;
     
 END$$
@@ -95,6 +95,13 @@ CREATE TABLE `pollings` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `pollings`
+--
+
+INSERT INTO `pollings` (`id`, `user_id`, `post_id`, `post_options_id`, `created_at`, `updated_at`) VALUES
+(3, 43, 51, 41, '2019-08-31 12:54:57', '2019-08-31 12:54:57');
+
 -- --------------------------------------------------------
 
 --
@@ -111,6 +118,7 @@ CREATE TABLE `posts` (
   `post_tags` text,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_by` int(11) DEFAULT NULL,
   `expire_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -118,31 +126,19 @@ CREATE TABLE `posts` (
 -- Dumping data for table `posts`
 --
 
-INSERT INTO `posts` (`id`, `user_id`, `post_type`, `title`, `descriptions`, `image`, `post_tags`, `created_at`, `updated_at`, `expire_date`) VALUES
-(1, 7, 2, 'non tech', 'non tech', NULL, NULL, '2019-08-28 09:37:00', '0000-00-00 00:00:00', NULL),
-(2, 7, 3, 'test', 'lllllllllllllllllllll', '/uploads/posts/1567238454.jpg', NULL, '2019-08-31 11:31:23', '0000-00-00 00:00:00', '2019-08-30'),
-(3, 38, 4, 'Highcharts Demo', 'fdf', NULL, NULL, '2019-08-30 06:05:24', '2019-08-30 06:05:24', NULL),
-(4, 36, 1, 'Title', 'Description', 'Description', '[\"PHP\",\"Python\"]', '2019-08-31 02:28:41', '2019-08-31 02:28:41', NULL),
-(5, 36, 1, 'Title', 'Description', NULL, '[\"PHP\",\"Python\"]', '2019-08-31 02:29:06', '2019-08-31 02:29:06', NULL),
-(6, 36, 1, 'Title', 'Description', NULL, '[\"PHP\",\"Python\"]', '2019-08-31 02:29:32', '2019-08-31 02:29:32', NULL),
-(7, 36, 1, 'Title', 'Description', NULL, '[\"PHP\",\"Python\"]', '2019-08-31 02:30:24', '2019-08-31 02:30:24', NULL),
-(8, 36, 1, 'dfgnd', 'dfn', '/uploads/posts/1567238454.jpg', '[\"PHP\",\"Python\"]', '2019-08-31 02:30:54', '2019-08-31 02:30:54', NULL),
-(9, 36, 1, 'dfsb', 'sdfh', '/uploads/posts/1567240050.jpg', '[\"PHP\",\"Python\"]', '2019-08-31 02:57:30', '2019-08-31 02:57:30', NULL),
-(10, 36, 1, 'dfsb', 'sdfh', '/uploads/posts/1567240067.jpg', '[\"PHP\",\"Python\"]', '2019-08-31 02:57:47', '2019-08-31 02:57:47', NULL),
-(11, 36, 1, 'sdfn', 'sdfh', '/uploads/posts/1567240083.jpg', '[\"PHP\",\"Python\"]', '2019-08-31 02:58:03', '2019-08-31 02:58:03', NULL),
-(12, 36, 1, 'rtyj', 'rtyg', '/uploads/posts/1567240156.jpg', '[\"Python\",\"Android\"]', '2019-08-31 02:59:16', '2019-08-31 02:59:16', NULL),
-(13, 36, 1, 'dc', 'df', NULL, '[\"PHP\"]', '2019-08-31 03:12:30', '2019-08-31 03:12:30', NULL),
-(14, 36, 1, 's', 's', NULL, NULL, '2019-08-31 03:16:16', '2019-08-31 03:16:16', NULL),
-(15, 36, 2, 'd', 'd', NULL, NULL, '2019-08-31 03:16:34', '2019-08-31 03:16:34', NULL),
-(16, 36, 1, 'sdfb', 'ds', '/uploads/posts/1567241521.jpg', '[\"PHP\"]', '2019-08-31 03:22:01', '2019-08-31 03:22:01', NULL),
-(17, 36, 1, 'dfb', 'dfb', '/uploads/posts/1567241597.jpg', NULL, '2019-08-31 03:23:17', '2019-08-31 03:23:17', NULL),
-(18, 36, 2, 'dfbdf', 'dfh', NULL, NULL, '2019-08-31 03:35:08', '2019-08-31 03:35:08', NULL),
-(19, 36, 1, 'My Post', 'My Description', '/uploads/posts/1567244190.jpg', '[\"PHP\",\"iOS\",\"UI\"]', '2019-08-31 04:06:30', '2019-08-31 04:06:30', NULL),
-(20, 36, 1, 'ds', 's', NULL, '[\"Python\"]', '2019-08-31 06:13:05', '2019-08-31 06:13:05', NULL),
-(21, 36, 1, 'sdg', 'dsg', '/uploads/posts/1567255758.jpg', '[\"PHP\",\"Android\"]', '2019-08-31 07:19:18', '2019-08-31 07:19:18', NULL),
-(22, 36, 1, 'df', 'dfnh', '/uploads/posts/1567255781.jpg', '[\"Python\"]', '2019-08-31 07:19:41', '2019-08-31 07:19:41', NULL),
-(23, 36, 1, 'tttttttttttt', 'dfgnhhhhhhhh', NULL, '[\"PHP\",\"Python\"]', '2019-08-31 07:20:40', '2019-08-31 07:20:40', NULL),
-(24, 36, 1, '12121', 'dsfgdsfgdf', '/uploads/posts/1567256510.png', '[\"Python\",\"Android\"]', '2019-08-31 07:31:50', '2019-08-31 07:31:50', NULL);
+INSERT INTO `posts` (`id`, `user_id`, `post_type`, `title`, `descriptions`, `image`, `post_tags`, `created_at`, `updated_at`, `created_by`, `expire_date`) VALUES
+(1, 7, 2, 'non tech', 'non tech', NULL, NULL, '2019-08-28 09:37:00', '0000-00-00 00:00:00', 7, NULL),
+(29, 37, 2, 'zxzx', 'cxcxcxcxc', NULL, NULL, '2019-08-31 10:21:00', '2019-08-31 10:21:00', NULL, NULL),
+(30, 37, 1, 'xx', 'xxx', NULL, NULL, '2019-08-31 10:22:02', '2019-08-31 10:22:02', NULL, NULL),
+(31, 37, 1, 'hai shibila', 'xcxcx', NULL, '[\"Python\"]', '2019-08-31 10:22:27', '2019-08-31 10:22:27', NULL, NULL),
+(32, 37, 1, 'god god', 'xcxcxc', NULL, '[\"Python\",\"Android\"]', '2019-08-31 10:23:28', '2019-08-31 10:23:28', NULL, NULL),
+(33, 37, 1, 'xcfg', 'dfdf', NULL, '[\"Python\"]', '2019-08-31 10:23:52', '2019-08-31 10:23:52', NULL, NULL),
+(36, 7, 3, 'Highcharts Demo god', NULL, '/uploads/posts/1567267742.jpg', NULL, '2019-08-31 16:09:02', '2019-08-31 10:39:02', NULL, '2019-09-15'),
+(37, 7, 3, 'Test New Poll', NULL, '/uploads/posts/1567269359.jpg', NULL, '2019-08-31 16:35:59', '2019-08-31 11:05:59', NULL, '2019-12-11'),
+(51, 7, 3, 'Which logo you like the most from the below image ?', NULL, '/uploads/posts/1567275309.png', NULL, '2019-08-31 18:15:09', '2019-08-31 12:45:09', NULL, '2019-11-14'),
+(52, 38, 4, 'Suggestion regarding washroom', 'Men\'s washroom needs a better cleanliness.', NULL, NULL, '2019-08-31 12:47:58', '2019-08-31 12:47:58', NULL, NULL),
+(53, 42, 1, 'What is a CSRF token ? What is its importance and how does it work?', 'I am writing an application (Django, it so happens) and I just want an idea of what actually a \"CSRF token\" is and how it protects the data. Is the post data not safe if you do not use CSRF tokens?', NULL, '[\"PHP\",\"Android\"]', '2019-08-31 12:52:12', '2019-08-31 12:52:12', NULL, NULL),
+(54, 43, 1, 'heerh', 'rehraeh', '/uploads/posts/1567276048.jpg', '[\"Python\"]', '2019-08-31 12:57:28', '2019-08-31 12:57:28', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -164,7 +160,9 @@ CREATE TABLE `post_comments` (
 --
 
 INSERT INTO `post_comments` (`id`, `post_id`, `user_id`, `comments`, `created_at`, `updated_at`) VALUES
-(2, 1, 35, 'dfdf', '2019-08-30 12:13:44', '0000-00-00 00:00:00');
+(6, 53, 42, 'Anyone?', '2019-08-31 12:52:29', '2019-08-31 12:52:29'),
+(7, 53, 42, 'Second Comment', '2019-08-31 12:53:11', '2019-08-31 12:53:11'),
+(8, 53, 43, 'Yes, the post data is safe. But the origin of that data is not. This way somebody can trick user with JS into logging in to your site, while browsing attacker\'s web page.\n\nIn order to prevent that, django will send a random key both in cookie, and form data. Then, when users POSTs, it will check if two keys are identical. In case where user is tricked, 3rd party website cannot get your site\'s cookies, thus causing auth error.', '2019-08-31 12:54:30', '2019-08-31 12:54:30');
 
 -- --------------------------------------------------------
 
@@ -199,10 +197,15 @@ CREATE TABLE `post_options` (
 --
 
 INSERT INTO `post_options` (`id`, `post_id`, `options`, `created_at`, `updated_at`) VALUES
-(1, 2, 'a', '2019-08-28 09:38:06', '0000-00-00 00:00:00'),
-(2, 2, 'b', '2019-08-28 09:38:15', '0000-00-00 00:00:00'),
-(3, 2, 'c', '2019-08-28 09:38:24', '0000-00-00 00:00:00'),
-(4, 2, 'd', '2019-08-28 09:38:30', '0000-00-00 00:00:00');
+(32, 36, 'xx', '2019-08-31 16:09:02', '0000-00-00 00:00:00'),
+(33, 36, 'ccc', '2019-08-31 16:09:02', '0000-00-00 00:00:00'),
+(34, 37, 'A', '2019-08-31 16:36:00', '0000-00-00 00:00:00'),
+(35, 37, 'B', '2019-08-31 16:36:00', '0000-00-00 00:00:00'),
+(36, 37, 'C', '2019-08-31 16:36:00', '0000-00-00 00:00:00'),
+(37, 37, 'D', '2019-08-31 16:36:00', '0000-00-00 00:00:00'),
+(41, 51, 'Logo 1', '2019-08-31 18:15:09', '0000-00-00 00:00:00'),
+(42, 51, 'Logo 2', '2019-08-31 18:15:09', '0000-00-00 00:00:00'),
+(43, 51, 'Logo 3', '2019-08-31 18:15:09', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -257,12 +260,13 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `google_id`, `empl_id`, `designation`, `user_type`, `active`, `pass_text`, `is_delete`) VALUES
-(3, 'Shibila BS', 'shibilabs23@gmail.com', NULL, NULL, '9MqJcPMpU9OoRpn4zc9MMmqt6URLYIy3MsEMYqxcFZnGBICCrR2nCjrHOu0V', '2019-08-26 05:17:21', '2019-08-26 05:17:21', '110597619798452201090', '', '', 3, 0, NULL, 0),
+(3, 'Shibila BS', 'shibilabs23@gmail.com', NULL, NULL, '9MqJcPMpU9OoRpn4zc9MMmqt6URLYIy3MsEMYqxcFZnGBICCrR2nCjrHOu0V', '2019-08-26 05:17:21', '2019-08-31 01:17:31', '110597619798452201090', '', '', 3, 0, NULL, 0),
 (7, 'Admin', 'admin@spericorn.com', NULL, '$2y$10$0vubRL8bYUZfcypmpMNrGOvFuZF5bbqN4xqUM9ddarowgthwYlrOK', NULL, '2019-08-27 03:58:20', '2019-08-27 03:58:20', NULL, NULL, NULL, 1, 0, NULL, 0),
-(35, 'Shibila B', 'shibila.b@spericorn.com', NULL, NULL, 'lEhnV5LC3kyXTwZqROEehnsa9nWKgHllf1KtHEvtZfFE6unOqu61i3Nwp096', '2019-08-27 23:22:51', '2019-08-27 23:22:51', '110501969154466681683', NULL, NULL, 3, 0, NULL, 0),
-(36, 'Sreejith B S', 'sreejith@spericorn.com', NULL, NULL, 'Kfq2qZN33TJGDlGP7nhgWy3Mlyw87tOWdhdOm1GUgr4unz6l6D8DkY0c9PzC', '2019-08-27 23:28:07', '2019-08-27 23:28:07', '117422074489297320832', NULL, NULL, 3, 0, NULL, 0),
-(37, 'Sumesh M', 'sumesh.m@spericorn.com', NULL, NULL, 'BvHQRbJob0k72tEOzFdp0NdUyk0DtxrWJ526eSGxodwWePpvXD3JzUesaUkq', '2019-08-28 05:17:48', '2019-08-28 05:17:48', '115692105470834413430', NULL, NULL, 3, 0, NULL, 0),
-(38, 'Anonymous', 'anonymous@spericorn.com', NULL, '$2y$10$oc81Udd.kSw4tFJ3RVOPROLn2Cn8C/oezoK2roodnPrkySj32uO8y', NULL, '2019-08-28 06:20:01', '2019-08-28 06:20:01', NULL, NULL, NULL, 2, 0, 'User@123', 0);
+(37, 'Sumesh M', 'sumesh.m@spericorn.com', NULL, NULL, 'Ll53HKBNp5ByIlfSdc57TJR3WEo9KGqehRbhrKxP2wPu5hBC7TBEdOwaSkqW', '2019-08-28 05:17:48', '2019-08-31 10:50:53', '115692105470834413430', NULL, NULL, 3, 1, NULL, 0),
+(38, 'Anonymous', 'anonymous@spericorn.com', NULL, '$2y$10$oc81Udd.kSw4tFJ3RVOPROLn2Cn8C/oezoK2roodnPrkySj32uO8y', NULL, '2019-08-28 06:20:01', '2019-08-28 06:20:01', NULL, NULL, NULL, 2, 0, 'User@123', 0),
+(39, 'Shibila B', 'shibila.b@spericorn.com', NULL, NULL, '5OUaevxJD2BTFbuiYCFjWfUXdiz1UG4QMkLLuZEmDfksgJaSuR5XrDwZkckN', '2019-08-31 10:07:16', '2019-08-31 10:07:16', '110501969154466681683', NULL, NULL, 3, 0, NULL, 0),
+(42, 'Sreejith B S', 'sreejith@spericorn.com', NULL, NULL, 'GFQ7d47hTG6outbFPwxzT2uqrcxlqNeYDHcyQRPbt3fXrV8l0MV5haGNAHZP', '2019-08-31 12:50:57', '2019-08-31 12:50:57', '117422074489297320832', NULL, NULL, 3, 0, NULL, 0),
+(43, 'Jijo Jannest', 'jijo@spericorn.com', NULL, NULL, 'lDxg1ReGmkISq7AmKmk0bZtr7xlx40zBrlXzUR5g9BpChCFDvChFAwkdtEWm', '2019-08-31 12:53:49', '2019-08-31 12:53:49', '106429882794129134696', NULL, NULL, 3, 0, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -368,19 +372,19 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `pollings`
 --
 ALTER TABLE `pollings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `post_comments`
 --
 ALTER TABLE `post_comments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `post_images`
@@ -392,7 +396,7 @@ ALTER TABLE `post_images`
 -- AUTO_INCREMENT for table `post_options`
 --
 ALTER TABLE `post_options`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `post_types`
@@ -404,7 +408,7 @@ ALTER TABLE `post_types`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `user_types`

@@ -11,9 +11,9 @@
 
             <div class="card login-module">
                 <div class="card-header text-center">
-                    Admin Login
+                    Admin/Guest Login
                 </div>
-               
+
                 <div class="card-body">
                     @if($errors->any())
                         <div class="alert alert-danger">{{$errors->first()}}</div>
@@ -97,7 +97,7 @@
                                 </div>
                             </div>
                         </div> -->
-<!-- 
+<!--
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
@@ -114,7 +114,7 @@
                             @endif
                         </div>
                     </div> -->
-                    
+
                 </form>
             </div>
         </div>

@@ -88,7 +88,7 @@ class LoginController extends Controller
 // only allow people with @company.com to login
 		if(explode("@", $user->email)[1] !== 'spericorn.com'){
 
-			return redirect('login')->withErrors(['domain not valid']);
+			return redirect('login')->withErrors(['Only spericorn domain Email login permitted']);
 		}
 
 
@@ -104,7 +104,7 @@ class LoginController extends Controller
 				return  redirect('/')->withErrors(['This user is Deactivated']);
 			}
 
-			
+
 
 		}else{
 

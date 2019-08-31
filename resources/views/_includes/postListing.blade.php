@@ -117,11 +117,13 @@
         <!-- <td class="d-views">
             <a>36</a>
         </td> -->
-        <td class="d-activity">
+        <td class="d-activity" style="white-space: nowrap;">
             <a>
                 @php
                     if($post->comments()->get()->isNotEmpty()){
                         echo $post->comments()->latest()->first()->created_at;
+                    } else{
+                        echo 'No Activity';
                     }
                 @endphp
             </a>

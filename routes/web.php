@@ -32,6 +32,7 @@ Route::get('auth/google/callback', 'Auth\LoginController@handleGoogleCallback');
 Route::group(['middleware' => ['auth']], function() {
 
 	Route::get('/home', ['uses'=>'HomeController@index'])->name('home');
+	Route::get('/profile', ['uses'=>'HomeController@profile'])->name('profile');
 	Route::get('/users', ['uses'=>'HomeController@userlist'])->name('userlist');
 	Route::get('/createComplaints', ['uses'=>'HomeController@createComplaints'])->name('createcomplaints');
 	Route::post('posts/loadPosts', ['uses'=>'PostController@loadPosts'])->name('posts.loadPosts');

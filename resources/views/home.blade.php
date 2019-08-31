@@ -41,6 +41,17 @@
       border-radius: 4px;
       cursor: pointer;
     }
+
+    .poll-img-wrap img{
+    max-width: 600px;
+    margin-bottom: 20px;
+    }
+    .activity{
+      width:100px !important;
+    }
+    label.dropdown:before{
+      background:  transparent !important;
+    }
 </style>
 
 
@@ -231,7 +242,7 @@ loadPosts();
 
         });
 
-        
+
 
         // Tags on change event
         $('body').on('change','#post_type',function(){
@@ -277,6 +288,9 @@ loadPosts();
                         $(".createForm").hide();
                         $("form#createForm")[0].reset();
                         $("form#createForm").parsley().reset();
+
+                        $(".home-add-post").hide();
+                        $("#addNew").show();
 
                         loadPosts();
                     }

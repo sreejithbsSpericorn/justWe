@@ -797,7 +797,7 @@ dt {
 }
 
 .graph {
-  background-color: #3d9970;
+  background-color: #ff8400;
   width: 50px;
   cursor: pointer;
   height: 22px;
@@ -836,11 +836,13 @@ dt {
 .login-page-wrap .login-area .login-button .login-btn {
   background: #fff;
   padding: 10px 72px;
-  border-radius: 12px;
-  font-size: 20px;
+  border-radius: 8px;
+  font-size: 21px;
   color: #134563;
   text-decoration: none;
   margin-top: 40px;
+  box-shadow: 5px 10px 15px 0px rgba(0, 0, 0, 0.4);
+  font-weight: 600;
 }
 .login-page-wrap .login-area .login-button .login-btn span img {
   transform: rotate(-90deg);
@@ -1398,6 +1400,14 @@ dt {
 }
 
 /*End : edit-profile-model */
+.anonyms-container {
+  padding: 30px 0px;
+}
+.anonyms-container .anonyms-wraper {
+  display: flex;
+  justify-content: center;
+}
+
 /* placeholder mixin */
 /* how to use this variabile*/
 /* .forms{

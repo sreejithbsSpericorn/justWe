@@ -18,7 +18,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use App\Events\Complaint;
 use App\Events\Postsave;
-use App\Events\Comment;
 
 class PostController extends Controller
 {
@@ -94,7 +93,7 @@ class PostController extends Controller
         }
 
         $post->save();
-       
+
        event(new Postsave('Hi there Pusher!'));
         return response()->json(array("status" => true));
     }
@@ -144,8 +143,6 @@ class PostController extends Controller
         $comment = PostComment::create($input);
         $user = User::where('id',$input['user_id'])->select()->first();
         $comment['user'] = Auth::user()->name;
-        
-        event(new Comment('Hi there Pusher!'));
 
         return response(['status'=>true,'comment'=>$comment]);
     }
@@ -165,7 +162,7 @@ class PostController extends Controller
 
         $post = Post::find($request->post_id);
 
-        $poll_options = PostOption::all();
+        $poll_options = PostOption::where('post_id', $request->post_id)->get();
 
         $renderer = View::make('_includes.renderPollDisplay', compact('post', 'getPoll', 'poll_options'))->render();
         $result['status']=true;

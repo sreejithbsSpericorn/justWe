@@ -1,23 +1,40 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" style="padding:30px 0px;">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard Anonymous</div>
-                <div class="message"></div>
+            <div class="">
+                <div class="text-ce">
+                    <h2 class="text-center">
+                       Send a Message Anonymously
+                    </h2>
+
+            </div>
+                <div class="message" style="color:green;">
+                </div><br/>
                     <form method="POST" id="myForm" action="{{ route('savepost') }}" enctype="multipart/form-data" >
                     {{ csrf_field() }}
 
                     Title
-                    <input type="text" name="title" id="title" required>
+                    <div class="form-group">
+                         <input class="form-control" type="text" name="title" id="title" required>
+                    </div>
+
+
                     <span class="error" id="titleError"></span>
-                    Descriptions
-                    <textarea name="description" id="" cols="30" rows="7" id="description" required></textarea>
+                    Description
+                    <div class="form-group">
+                    <textarea style="width: 100%" name="description" id="" cols="30" rows="7" id="description" required></textarea>
+                         </div>
                     <span class="error" id="descError"></span>
-                    <button type="button" id="Filesave" onclick="SavePost()" class="form_s_c btn-01 btn btn-success btn-fill btn-block">Make complaint </button>
-                    
+                    <div class="text-center">
+                        <button type="button" id="Filesave" onclick="SavePost()"
+                     class="form_s_c btn-01 btn btn-primary btn-fill">Send complaint </button>
+                    </div>
+
+
                 </form>
             </div>
         </div>
@@ -35,7 +52,7 @@
         else{
             $('#titleError').text('');
         }
-        if($('#description').text() ===''){
+        if($('#description').val() ===''){
             $('#descError').text('Description is required');
         }
         else{
