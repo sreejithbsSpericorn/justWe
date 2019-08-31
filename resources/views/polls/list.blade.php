@@ -166,7 +166,7 @@
 
        }
 function SaveOptions(){
-
+ 
   var arrays = new Array();
   var error_status = 'true';
   $(".error").hide();
@@ -211,15 +211,26 @@ function SaveOptions(){
   });
   
   if(error_status != 'false' && $('input[name="option[]"]').length>=2){
+     
+     var formData = new FormData($("form#pollform")[0]);
+ // formData.append("image", document.getElementById('image').files[0]);
+ // formData.append("title", $(".title").val());
+ // formData.append("expiry_date", $(".expiry_date").val());
+ // formData.append("options[]", document.getElementById('image').files[0]);
+    
     $.ajax({
      url: "{{ route('savepoll') }}",
      type: 'POST',
-     data: $('#pollform').serializeArray(),
-
+     
+      data: formData,
+      cache: false,
+      contentType: false,
+      processData: false,
+      
      success: function (data) {
        var data = JSON.parse(data);
       
-
+      $(".statusmessage").show();
       if(data.status == 'success'){
          $('#pollform')[0].reset();
          $("#myModal").modal('hide');
