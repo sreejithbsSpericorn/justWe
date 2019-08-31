@@ -1,13 +1,20 @@
-@extends('layouts.master')
-
+@extends('layouts.app')
 @section('content')
+<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
+<link href="{{ asset('css/jquery-custom-dropdown-with-checkbox.css') }}" rel="stylesheet">
 
-<!--Begin : Create Post-->
-<div class="create-post-wrap">
-    <button class="btn btn-primary create-new-post" id="addNew">Create New Post</button>
-</div>
+<style type="text/css">
+    .create-add-form, .outer-div, .tag-div, .content-div{
+        display: none;
+    }
+</style>
 
 <div class="container">
+    <div>
+        <button type="button" id="addNew"> ADD NEW ENTRY </button>
+    </div>
+
     <form id="createForm" method="POST" enctype="multipart/form-data" data-parsley-validate>
         {!! csrf_field() !!}
         <div class="create-add-form">
@@ -60,65 +67,38 @@
             </div>
         </div>
     </form>
-</div>
 
-<!--End : Create Post-->
-
-<!--Begin : Content Area-->
-<div class="container category-selector">
-    <div class="row">
-
-        <div class="content-right-wrap">
-            <div class="d-flex">
-
-                <!-- <form class="form-inline all-category"> -->
-                <div class="form-group mr-15 mb-2 category-option">
-                    <label class="dropdown">
-                        <select id="category-sel">
-                            <option value="0" selected>All Categories</option>
-                            <option value="1">Technical</option>
-                            <option value="2">Non-Technical</option>
-                            <option value="3">Polls</option>
-                        </select>
-                    </label>
-                </div>
-                <!-- </form> -->
-            </div>
-            <div class="newfeeds-container table-responsive">
-                <table class="newsfeed-table">
-                    <thead>
-                        <tr>
-                            <th>Topic</th>
-                            <th class="replies">Comments</th>
-                            <!-- <th class="views">Views</th> -->
-                            <th class="activity">Activity</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- APPEND -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    <div class="feeds-container">
+        Feeds content here
     </div>
 
 </div>
-<!--End : Content Area-->
 
 
-@stop
-
-@section('custom_scripts')
-
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.1/parsley.js"></script>
+<script type="text/javascript">
+    var base_url = "<?php echo URL::to('/'); ?>";
+</script>
 <script type="text/javascript">
 
-    var post_type;
-    // var page_num = 0;
-    var filter_type = $("#category-sel").val();
+    function toggleDivs(type){
+        if(type == 'show'){
+            $(".tag-div").show();
+            $(".content-div").show();
+            $(".outer-div").show();
+        } else{
+            $(".tag-div").hide();
+            $(".content-div").hide();
+            $(".outer-div").hide();
+        }
+    }
 
     $(document).ready(function() {
 
-        loadPosts();
+        var post_type;
 
         // Create New Button click event
         $("#addNew").click(function(){
@@ -144,14 +124,19 @@
             }
         });
 
-        $("#category-sel").change(function(){
-            filter_type = $(this).val();
-            loadPosts();
-        });
-
         // Create form submission event
         $("form#createForm").submit(function(e) {
             e.preventDefault();
+
+            // $(this).parsley({
+            //     excluded: '.tag-div'
+            // }).validate();
+
+            if ( ! $(this).parsley({
+                excluded: '.tag-div'
+            }).isValid()) {
+                return false;
+            }
 
             var formData = new FormData(this);
 
@@ -166,21 +151,26 @@
                     if(data.status){
                         toastr.success('Post created successfully');
                         toggleDivs('hide');
-                        $(".createForm").hide();
                         $("form#createForm")[0].reset();
                         $("form#createForm").parsley().reset();
-
-                        loadPosts();
                     }
                 }
             });
         });
 
 
-        // CUSTOM SELECT BOX CSS
+        // CUSTOM SELECT BOX
         $("body").on("click", "#custom-select" ,function(){
             $("#custom-select-option-box").toggle();
         });
+        function toggleFillColor(obj) {
+            $("#custom-select-option-box").show();
+            if($(obj).prop('checked') == true) {
+                $(obj).parent().css("background",'#c6e7ed');
+            } else {
+                $(obj).parent().css("background",'#FFF');
+            }
+        }
         $("body").on("click", ".custom-select-option" ,function(){
             var checkboxObj = $(this).children("input");
             $(checkboxObj).prop("checked",true);
@@ -191,50 +181,8 @@
                 $("#custom-select-option-box").hide();
             }
         });
-        // CUSTOM SELECT BOX CSS
+        // CUSTOM SELECT BOX
+
     });
-
-
-    // LOAD MAIN POSTS
-    function loadPosts(){
-        $.ajax({
-            url: base_url+'/posts/loadPosts',
-            type: 'POST',
-            data: {
-                filter_type: filter_type,
-                _token: CSRF_TOKEN
-            },
-            success: function (data) {
-                if(data.status){
-                    $(".newsfeed-table tbody").empty().append(data.renderer);
-                }
-            }
-        });
-    }
-
-
-    // CUSTOM SELECT BOX CSS
-    function toggleFillColor(obj) {
-        $("#custom-select-option-box").show();
-        if($(obj).prop('checked') == true) {
-            $(obj).parent().css("background",'#c6e7ed');
-        } else {
-            $(obj).parent().css("background",'#FFF');
-        }
-    }
-
-    // SHOW/HIDE DIV HELPER
-    function toggleDivs(type){
-        if(type == 'show'){
-            $(".tag-div").show();
-            $(".content-div").show();
-            $(".outer-div").show();
-        } else{
-            $(".tag-div").hide();
-            $(".content-div").hide();
-            $(".outer-div").hide();
-        }
-    }
 </script>
-
 @endsection

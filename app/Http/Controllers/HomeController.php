@@ -8,10 +8,13 @@ use App\Post;
 use DB;
 use View;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Validator;
 use Auth;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+
+use App\PostType;
+
 class HomeController extends Controller
 {
     /**
