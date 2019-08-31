@@ -2,64 +2,124 @@
 
 @section('content')
 
+<style type="text/css">
+    .home-add-post{
+      border: 1px solid #ccc;
+      width: 100%;
+      border-radius: 2px;
+      margin-top: 20px;
+      box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+    }
+    .home-add-post-title{
+      border-bottom: 1px solid #eee;
+      background: whitesmoke;
+      padding: 7px 15px;
+      font-size: 16px;
+      color: #134563;
+      font-weight: 600;
+    }
+    .home-add-post-inner{
+      padding: 25px 60px;
+    }
+    .form-control[type="file"]{
+      height: 43px;
+    }
+    .close-home-post{
+      color: #134563;
+      cursor: pointer;
+      margin-left: auto;
+      font-size: 13px;
+    }
+    .home-add-post .custom-select {
+      background: #FFF url(downward-arrow.png) no-repeat center right 10px;
+      display: block;
+      width: 100% !important;
+      padding: 5px 15px;
+      border: #ced4da 1px solid;
+      color: #565656;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+</style>
+
+
 <!--Begin : Create Post-->
-<div class="create-post-wrap">
-    <button class="btn btn-primary create-new-post" id="addNew">Create New Post</button>
-</div>
+<div class="create-post-wrap flex-column">
+    <button class="btn btn-primary create-new-post ml-auto mr-auto" id="addNew">Create New Post</button>
+    <div class="container ">
+        <form id="createForm" class="row d-flex justify-content-center align-items-center" method="POST" enctype="multipart/form-data" data-parsley-validate>
+            {!! csrf_field() !!}
+            <div class="create-add-form home-add-post ">
 
-<div class="container">
-    <form id="createForm" method="POST" enctype="multipart/form-data" data-parsley-validate>
-        {!! csrf_field() !!}
-        <div class="create-add-form">
-            <select name="post_type" id="post_type" required="">
-               <option value="">-- Choose a Post Type -- </option>
-               @foreach($post_types as $singleType)
-                   <option value="{{ $singleType->id }}"> {{ $singleType->type }}</option>
-               @endforeach
-            </select>
+              <div class="home-add-post-title d-flex">
+                <div>
+                  Create New Post
+                </div>
+                <div class="close-home-post">
+                  <a class="close-home-post">Cancel</a>
+                </div>
+              </div>
 
-            <div class="outer-div">
-               <div class="tag-div">
-                   <div class="custom-select" id="custom-select">- Choose Post Tags -</div>
-                   <div id="custom-select-option-box">
-                       <div class="custom-select-option">
-                           <input onchange="toggleFillColor(this);"
-                               class="custom-select-option-checkbox" type="checkbox"
-                               name="tags[]" value="PHP" data-parsley-required="false"> PHP
-                       </div>
-                       <div class="custom-select-option">
-                           <input onchange="toggleFillColor(this);"
-                               class="custom-select-option-checkbox" type="checkbox"
-                               name="tags[]" value="Python" data-parsley-required="false"> Python
-                       </div>
-                       <div class="custom-select-option">
-                           <input onchange="toggleFillColor(this);"
-                               class="custom-select-option-checkbox" type="checkbox"
-                               name="tags[]" value="Android" data-parsley-required="false"> Android
-                       </div>
-                       <div class="custom-select-option">
-                           <input onchange="toggleFillColor(this);"
-                               class="custom-select-option-checkbox" type="checkbox"
-                               name="tags[]" value="iOS" data-parsley-required="false"> iOS
-                       </div>
-                       <div class="custom-select-option">
-                           <input onchange="toggleFillColor(this);"
-                               class="custom-select-option-checkbox" type="checkbox"
-                               name="tags[]" value="UI" data-parsley-required="false"> UI
+              <div class="home-add-post-inner">
+
+                <select name="post_type" id="post_type" required="" class="form-control">
+                   <option value="">-- Choose a Post Type -- </option>
+                   @foreach($post_types as $singleType)
+                       <option value="{{ $singleType->id }}"> {{ $singleType->type }}</option>
+                   @endforeach
+                </select>
+
+                <div class="outer-div">
+                   <div class="tag-div mt-2">
+                       <div class="custom-select" id="custom-select">- Choose Post Tags -</div>
+                       <div id="custom-select-option-box">
+                           <div class="custom-select-option">
+                               <input onchange="toggleFillColor(this);"
+                                   class="custom-select-option-checkbox" type="checkbox"
+                                   name="tags[]" value="PHP" data-parsley-required="false"> PHP
+                           </div>
+                           <div class="custom-select-option">
+                               <input onchange="toggleFillColor(this);"
+                                   class="custom-select-option-checkbox" type="checkbox"
+                                   name="tags[]" value="Python" data-parsley-required="false"> Python
+                           </div>
+                           <div class="custom-select-option">
+                               <input onchange="toggleFillColor(this);"
+                                   class="custom-select-option-checkbox" type="checkbox"
+                                   name="tags[]" value="Android" data-parsley-required="false"> Android
+                           </div>
+                           <div class="custom-select-option">
+                               <input onchange="toggleFillColor(this);"
+                                   class="custom-select-option-checkbox" type="checkbox"
+                                   name="tags[]" value="iOS" data-parsley-required="false"> iOS
+                           </div>
+                           <div class="custom-select-option">
+                               <input onchange="toggleFillColor(this);"
+                                   class="custom-select-option-checkbox" type="checkbox"
+                                   name="tags[]" value="UI" data-parsley-required="false"> UI
+                           </div>
                        </div>
                    </div>
-               </div>
 
-               <div class="content-div">
-                   <input type="text" name="title" id="title" placeholder="Enter Post Title" required="">
-                   <textarea name="description" id="description" placeholder="Enter Post Description" required=""></textarea>
-                   <input type="file" name="post_image" id="post_image">
-                   <button type="submit" id="submitBtn"> SUBMIT </button>
-               </div>
+                   <div class="content-div">
+                       <input type="text" name="title" class="form-control mt-2 mb-2" id="title" placeholder="Enter Post Title" required="">
+                       <textarea name="description" id="description" class="form-control mb-2" placeholder="Enter Post Description" required=""></textarea>
+                       <input type="file" name="post_image" id="post_image"  class="form-control mt-2 mb-2">
 
+                       <div class="d-flex ml-auto">
+                         <button type="submit" id="submitBtn" class="btn btn-primary create-new-post ml-auto"> Create post </button>
+                       </div>
+
+                   </div>
+
+                </div>
+
+
+              </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 
 <!--End : Create Post-->
@@ -123,6 +183,12 @@
         // Create New Button click event
         $("#addNew").click(function(){
             $(".create-add-form").show();
+            $(this).hide();
+        });
+
+        $(".close-home-post").click(function(){
+            $(".home-add-post").hide();
+            $("#addNew").show();
         });
 
         //Poll Submission
