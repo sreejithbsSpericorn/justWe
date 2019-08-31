@@ -492,6 +492,37 @@ hr:after {
   color: #fff !important;
 }
 
+.btn-edit {
+  border: 1px solid #ff8400 !important;
+  outline: none;
+  background: #ff8400;
+  background: -moz-linear-gradient(-45deg, #ff8400 0%, #ff9a35 100%, #7db9e8 100%);
+  background: -webkit-linear-gradient(-45deg, #ff8400 0%, #ff9a35 100%, #7db9e8 100%);
+  background: linear-gradient(135deg, #ff8400 0%, #ff9a35 100%, #7db9e8 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#ff8400", endColorstr="#7db9e8",GradientType=1 );
+  padding: 5px 13px !important;
+  box-shadow: 2px 2px 15px 0px rgba(0, 0, 0, 0.25);
+  color: #fff !important;
+  cursor: pointer;
+}
+.btn-edit i {
+  margin-right: 7px;
+}
+
+.btn-update {
+  border: 1px solid #ff8400 !important;
+  outline: none;
+  background: #ff8400;
+  background: -moz-linear-gradient(-45deg, #ff8400 0%, #ff9a35 100%, #7db9e8 100%);
+  background: -webkit-linear-gradient(-45deg, #ff8400 0%, #ff9a35 100%, #7db9e8 100%);
+  background: linear-gradient(135deg, #ff8400 0%, #ff9a35 100%, #7db9e8 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#ff8400", endColorstr="#7db9e8",GradientType=1 );
+  padding: 5px 13px !important;
+  box-shadow: 2px 2px 15px 0px rgba(0, 0, 0, 0.25);
+  color: #fff !important;
+  cursor: pointer;
+}
+
 .cf:before {
   display: table;
   content: "";
@@ -804,11 +835,12 @@ dt {
 }
 .login-page-wrap .login-area .login-button .login-btn {
   background: #fff;
-  padding: 10px 20px;
+  padding: 10px 72px;
   border-radius: 12px;
   font-size: 20px;
   color: #134563;
   text-decoration: none;
+  margin-top: 40px;
 }
 .login-page-wrap .login-area .login-button .login-btn span img {
   transform: rotate(-90deg);
@@ -826,6 +858,7 @@ dt {
   z-index: 9999;
   padding: 7px 0 !important;
   border-bottom: 1px solid #ddd;
+  z-index: 99;
 }
 .navbar .navbar-brand img {
   height: 38px;
@@ -997,11 +1030,22 @@ dt {
   margin-bottom: 20px;
 }
 .category-selector .content-right-wrap .newfeeds-container .newsfeed-table .poll-section .poll-content .poll-list .poll-img-wrap img {
-  width: 65%;
+  max-width: 600px;
+  height: auto;
+}
+.category-selector .content-right-wrap .newfeeds-container .newsfeed-table .poll-section .poll-content .poll-list form {
+  padding: 15px;
+}
+.category-selector .content-right-wrap .newfeeds-container .newsfeed-table .poll-section .poll-content .poll-list form .poll-submit {
+  margin-top: 20px;
 }
 .category-selector .content-right-wrap .newfeeds-container .newsfeed-table .poll-section .poll-ratio-container {
   padding: 10px 10px;
   flex: 1 1 200px;
+}
+.category-selector .content-right-wrap .newfeeds-container .newsfeed-table .poll-section .poll-ratio-container .poll-ratio .poll-img-wrap img {
+  max-width: 600px;
+  height: auto;
 }
 .category-selector .content-right-wrap .newfeeds-container .newsfeed-table .poll-section .poll-ratio-container .poll-ratio .ratio1 {
   height: 20px;
@@ -1185,7 +1229,11 @@ dt {
 
 /* Begin profile-container */
 .profile-container {
-  padding: 60px 0px;
+  padding: 30px 0px;
+}
+.profile-container .profile-header {
+  display: flex;
+  justify-content: space-between;
 }
 .profile-container .profile-header p {
   font-size: 22px;
@@ -1300,8 +1348,15 @@ dt {
 }
 .profile-container .employee-post-details .random-password {
   margin-left: auto;
+  display: flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 .profile-container .employee-post-details .random-password p {
+  margin: 0 10px 0 0;
   font-size: 18px;
   word-break: break-word;
   color: #134563;
@@ -1309,11 +1364,40 @@ dt {
   cursor: pointer;
   text-decoration: none;
   display: block;
+}
+.profile-container .employee-post-details .random-password a {
+  font-size: 18px;
+  word-break: break-word;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
   margin-bottom: 10px;
   margin: 0;
+  background: #134563;
+  padding: 5px 10px;
+}
+.profile-container .employee-post-details .random-password a:hover {
+  color: #fff;
 }
 
 /* Begin profile-container */
+/*Begin : edit-profile-model */
+.edit-profile-model .modal-header {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  -ms-flex-pack: center;
+}
+
+/*End : edit-profile-model */
 /* placeholder mixin */
 /* how to use this variabile*/
 /* .forms{

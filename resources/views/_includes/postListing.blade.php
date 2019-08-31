@@ -84,33 +84,31 @@
                                 @if($post->image)
                                     <img src="{{ asset($post->image) }}" class="img-fluid">
                                 @endif
-                            </div>
-                            <form>
-                                @php $poll_options = $post->options()->get(); @endphp
+                        </div>
+                            @php $poll_options = $post->options()->get(); @endphp
 
-                                @foreach($poll_options as $option)
-                                    <label class="poll-container">
-                                        {{ $option->options }}
-                                        <input type="radio" name="choosed-poll-option" value="{{ $option->id }}">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                @endforeach
-                                <div class="poll-submit">
-                                    <button class="btn poll-submit-btn">Submit</button>
-                                </div>
-                            </form>
+                            @foreach($poll_options as $option)
+                                <label class="poll-container">
+                                    {{ $option->options }}
+                                    <input type="radio" class="choosed-poll-option" name="choosed-poll-option" value="{{ $option->id }}">
+                                    <span class="checkmark"></span>
+                                </label>
+                            @endforeach
+                            <div class="poll-submit">
+                            <button class="btn poll-submit-btn" data-post_id="{{$post->id}}">Submit</button>
+                            </div>
                         </div>
                     </div>
 
                 @endif
 
-            @else
-                <div class="topic-content">
-                    <p>
-                        {{ $post->description }}
-                    </p>
-                </div>
             @endif
+
+            <div class="topic-content">
+                <p>
+                    {{ $post->description }}
+                </p>
+            </div>
 
         </td>
         <td class="d-replay">

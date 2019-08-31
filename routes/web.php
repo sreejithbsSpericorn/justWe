@@ -50,7 +50,8 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('/poll/create','PostController@createpoll');
 	Route::get('/post/view/{post_id}','PostController@getpostdetails')->name('posts.view');
 	Route::post('/post/comments','PostController@getcomments')->name('loadcomments');
-	Route::post('/post/comments/add','PostController@addcomment')->name('addcomment');
+    Route::post('/post/comments/add','PostController@addcomment')->name('addcomment');
+    Route::post('/posts/submitpoll','PostController@submitpoll')->name('submitpoll');
 });
 
 
