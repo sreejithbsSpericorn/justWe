@@ -35,6 +35,10 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::post('/savepost', ['uses'=>'PostController@savepost'])->name('savepost');
 	Route::post('posts/renderCreateForm', ['uses'=>'PostController@renderCreateForm'])->name('posts.renderCreateForm');
 	Route::post('posts/create', ['uses'=>'PostController@create'])->name('posts.create');
+	Route::get('/createPoll','PostController@createpoll');
+	Route::get('/post/view/{id}','PostController@getpostdetails')->name('posts.view');
+	Route::post('/post/comments','PostController@getcomments')->name('loadcomments');
+	Route::post('/post/comments/add','PostController@addcomment')->name('addcomment');
 });
 
 

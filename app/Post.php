@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Post extends Model
 {
@@ -25,5 +26,22 @@ class Post extends Model
     }
     public function options(){
         return $this->hasMany(PostOption::class);
+    }
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+
+    public function getCreatedAtAttribute($date){
+        try {
+            $data = Carbon::parse($date)->diffForHumans();
+
+        } catch (\Exception $e) {
+            $data = $date;
+        }
+
+       return ($data);
     }
 }
