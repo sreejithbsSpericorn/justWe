@@ -9,8 +9,14 @@
                     <h1>{{$post->title}}</h1>
                     <div class="feeds-details">
                         <a class="category">
-                            <span class="badge-category-bg"></span>
-                            <span class="question-category">php</span>
+                            @if($post->post_tags)
+                                @php $tempArr = json_decode($post->post_tags, TRUE); @endphp
+                                @foreach($tempArr as $single)
+                                    <span class="badge-category-bg"></span>
+                                    <span class="question-category">{{ $single }}</span>
+                                @endforeach
+
+                            @endif
                         </a>
                     </div>
                 </div>
@@ -19,61 +25,56 @@
                 <div class="topic-container">
                     <div class="topic-avatar">
                         <div class="pro-pic">
-                            <a>{{$user->name[0]}}</a>
+                            <a>{{$post->user()->first()->name[0]}}</a>
                         </div>
                     </div>
                     <div class="topic-body ">
                         <div class="topic-owner">
-                            <a class="name" href="#">{{$user->name}}</a>
-                        <p class="posting-time">{{$post->created_at}}</p>
-
+                            <a class="name">{{$post->user()->first()->name}}</a>
+                            <p class="posting-time">{{ Carbon\Carbon::parse($post->created_at)->diffForHumans() }}</p>
                         </div>
                         <div class="regular-contents">
-                                @if($post->image)
+                            @if($post->image)
                                 <img src="{{asset($post->image)}}" alt="">
-                                @endif
-                               <p> {{$post->descriptions}}</p>
+                            @endif
+                            <p> {{$post->descriptions}}</p>
                         </div>
                         <div class="comment-section">
                             <div class="topic-avatar">
                                 <div class="pro-pic">
-                                <a>{{Auth::user()->name[0]}}</a>
+                                    <a>{{Auth::user()->name[0]}}</a>
                                 </div>
                             </div>
                             <div class="comment-textbox">
                                 <textarea rows="4" id="newComment"></textarea>
                                 <button class="btn btn-default btn-comment" id="addComment">comment</button>
                             </div>
-
                         </div>
 
                         <div class="comment-append">
-                                @foreach($comments as $comment)
+                            @foreach($comments as $comment)
                                 <div class="view-comment-section">
                                     <div class="comment-user-profile">
                                         <div class="topic-avatar">
-                                          <div class="pro-pic">
-                                              <a>{{$comment->name[0]}}</a>
-                                          </div>
-                                      </div>
-                                      <div class="user-details">
-                                          <a href="#" class="username">{{$comment->name}}</a>
+                                            <div class="pro-pic">
+                                                <a>{{$comment->name[0]}}</a>
+                                            </div>
+                                        </div>
+                                        <div class="user-details">
+                                          <a class="username">{{$comment->name}}</a>
                                           <span class="post-date">{{$comment->created_at}}</span>
-                                      </div>
-                                  </div>
-                                  <div class="user-comment">
-                                    <p>{{$comment->comments}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="user-comment">
+                                        <p>{{$comment->comments}}</p>
+                                    </div>
                                 </div>
-                            </div>
-                                @endforeach
+                            @endforeach
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
-
     </div>
 @stop
 
@@ -99,19 +100,19 @@
                     success:function(data){
                         if(data.status){
                           $('.comment-append').prepend('<div class="view-comment-section"><div class="comment-user-profile">'+
-                                                  '<div class="topic-avatar">'+
-                                                    '<div class="pro-pic">'+
-                                                     '<a>S</a>'+
-                                                    '</div>'+
-                                                  '</div>'+
-                                                  '<div class="user-details">'+
-                                                    '<a href="#" class="username">'+data.comment.user+'</a>'+
-                                                    '<span class="post-date">'+data.comment.created_at+'</span>'+
-                                                  '</div>'+
-                                                '</div>'+
-                                                '<div class="user-comment">'+
-                                                '<p>'+data.comment.comments+'</p>'+
-                                                '</div></div>');
+                              '<div class="topic-avatar">'+
+                                '<div class="pro-pic">'+
+                                 '<a>S</a>'+
+                                '</div>'+
+                              '</div>'+
+                              '<div class="user-details">'+
+                                '<a href="#" class="username">'+data.comment.user+'</a>'+
+                                '<span class="post-date">'+data.comment.created_at+'</span>'+
+                              '</div>'+
+                            '</div>'+
+                            '<div class="user-comment">'+
+                            '<p>'+data.comment.comments+'</p>'+
+                            '</div></div>');
                           $('#newComment').val('');
                         }
                     }

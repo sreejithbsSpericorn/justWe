@@ -58,7 +58,7 @@
         <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
             <div class="container">
                 <a class="navbar-brand mr-0 mr-md-2" href="{{ route('home') }}" aria-label="Home">
-                    <img src="images/justWe-logo-white1.png" class="img-fluid">
+                    <img src="{{ asset('images/justWe-logo-white1.png') }}" class="img-fluid">
                 </a>
                 <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
                     <div class="header-profile-pic">

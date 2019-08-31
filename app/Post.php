@@ -34,14 +34,14 @@ class Post extends Model
      * @var array
      */
 
-    public function getCreatedAtAttribute($date){
-        try {
-            $data = Carbon::parse($date)->diffForHumans();
+    // public function getCreatedAtAttribute($date){
+    //     try {
+    //         $data = Carbon::parse($date)->diffForHumans();
 
-        } catch (\Exception $e) {
-            $data = $date;
-        }
+    //     } catch (\Exception $e) {
+    //         $data = $date;
+    //     }
 
-       return ($data);
-    }
+    //    return ($data);
+    // }
 }

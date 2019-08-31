@@ -58,7 +58,6 @@ class PostController extends Controller
         $result['renderer'] = $renderer;
 
         return response()->json($result);
-
     }
 
     // Create new Post
@@ -96,7 +95,6 @@ class PostController extends Controller
 
     public function savepost(Request $request)
     {
-
         $input = $request->all();
         $validator = Validator::make($input, [
             'title' => 'required',
@@ -108,7 +106,6 @@ class PostController extends Controller
         }
 
         $data = array(
-            'created_by' => Auth::user()->id,
             'user_id' => Auth::user()->id,
             'title' => $input['title'],
             'descriptions' => $input['description'],
@@ -117,22 +114,19 @@ class PostController extends Controller
         Post::create($data);
         return response(['status' => 'success', 'message' => 'Complaints created successfully']);
     }
-    public function getpostdetails($id)
+
+    public function getpostdetails($post_id)
     {
         $comments =  PostComment::leftJoin('users', 'users.id', '=', 'post_comments.user_id')
-        ->where(['post_comments.post_id' => $id])
+        ->where(['post_comments.post_id' => $post_id])
         ->select('*', 'post_comments.created_at')
         ->orderBy('post_comments.id','DESC')
         ->get();
 
-        $post = Post::where('post_type', 1)
-            ->orWhere('post_type', 2)
-            ->where('id', $id)
-            ->first();
+        $post = Post::where('id', $post_id)->whereIn('post_type', [1, 2])->first();
 
-        $user = User::find($post->user_id);
         if ($post) {
-            return view('posts.view', compact('post','user','comments'));
+            return view('posts.view', compact('post','comments'));
         }
         return view('errors.403');
     }
@@ -141,9 +135,9 @@ class PostController extends Controller
         $input = $request->all();
         $input['user_id']= Auth::user()->id;
         $comment = PostComment::create($input);
-        // dd($comment);
         $user = User::where('id',$input['user_id'])->select()->first();
         $comment['user'] = Auth::user()->name;
+
         return response(['status'=>true,'comment'=>$comment]);
     }
 

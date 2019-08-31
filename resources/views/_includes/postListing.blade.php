@@ -1,7 +1,13 @@
 @foreach($posts as $post)
     <tr>
         <td class="topic-section">
-            <a href="#" class="newfeed-question">
+            @if($post->post_type == "3")
+                <a  href="javascript:void(0);" class="newfeed-question">
+            @else
+                <a href="{{ route('posts.view', $post->id) }}" class="newfeed-question">
+            @endif
+
+            <a href="{{ route('posts.view', $post->id) }}" class="newfeed-question">
                 <span class="type">[ {{ $post->posttype()->first()->type}} ] </span>
                 {{ $post->title }}
             </a>

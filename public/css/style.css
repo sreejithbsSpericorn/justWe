@@ -747,19 +747,29 @@ dt {
 }
 .percentage .graph-bar {
   background: #e4e1e1;
+  width: 90%;
+  height: 22px;
+  margin-top: 5px;
 }
-
-html, body {
-  height: 500px;
-  font-family: "fira-sans-2", sans-serif;
-  color: #333;
+.percentage .poll-value {
+  margin: 0;
+  cursor: pointer;
+  height: 26px;
+  margin-top: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #134563;
+  font-weight: 600;
+  font-size: 19px;
+  margin-left: 5px;
 }
 
 .graph {
   background-color: #3d9970;
   width: 50px;
   cursor: pointer;
-  height: 26px;
+  height: 22px;
   margin-top: 0px;
   display: flex;
   justify-content: center;
@@ -865,6 +875,17 @@ html, body {
 .category-selector .content-right-wrap {
   width: 100%;
   padding-left: 10px;
+}
+.category-selector .content-right-wrap .newfeeds-container .profile-post-header p {
+  font-size: 22px;
+  word-break: break-word;
+  color: #134563;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 30px;
+  margin: 0;
 }
 .category-selector .content-right-wrap .newfeeds-container .newsfeed-table th {
   padding: 12px 5px;
@@ -1052,6 +1073,7 @@ html, body {
 }
 .detailed-feeds .detailed-topic .topic-container .topic-body {
   flex: 0 1 auto;
+  width: 100%;
 }
 .detailed-feeds .detailed-topic .topic-container .topic-body .topic-owner {
   display: flex;
@@ -1165,17 +1187,132 @@ html, body {
 .profile-container {
   padding: 60px 0px;
 }
+.profile-container .profile-header p {
+  font-size: 22px;
+  word-break: break-word;
+  color: #134563;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 30px;
+}
+.profile-container .profile-section {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 20px;
+}
 .profile-container .profile-section .profile-page-pic .profile-pic {
-  height: 27px;
-  width: 27px;
+  height: 80px;
+  width: 80px;
   border-radius: 50%;
   border: 2px solid #134563;
   color: #134563;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 5px;
+  margin-right: 25px;
 }
+.profile-container .profile-section .profile-page-pic .profile-pic a {
+  font-size: 35px;
+}
+.profile-container .profile-section .user-profile-details .user-profile-name {
+  font-size: 22px;
+  word-break: break-word;
+  color: #134563;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 10px;
+  margin: 0;
+}
+.profile-container .profile-section .user-profile-details .disignation {
+  font-size: 16px;
+  word-break: break-word;
+  color: #134563;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 5px;
+  line-height: 17px;
+}
+.profile-container .profile-section .user-profile-details .user-email {
+  font-size: 16px;
+  word-break: break-word;
+  color: #134563;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 5px;
+  line-height: 17px;
+}
+.profile-container .profile-section .employee-id {
+  margin-left: auto;
+}
+.profile-container .profile-section .employee-id p {
+  border: 2px solid #134563;
+  padding: 5px 10px;
+}
+.profile-container .employee-post-details {
+  padding: 15px 0px;
+  border-bottom: 1px solid #ddd;
+}
+.profile-container .employee-post-details .post-count {
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-right: 20px;
+}
+.profile-container .employee-post-details .post-count p {
+  font-size: 18px;
+  word-break: break-word;
+  color: #134563;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 10px;
+  margin: 0;
+}
+.profile-container .employee-post-details .post-count a {
+  font-size: 16px;
+  word-break: break-word;
+  color: #134563;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  margin: 0 0 0 10px;
+}
+.profile-container .employee-post-details .random-password {
+  margin-left: auto;
+}
+.profile-container .employee-post-details .random-password p {
+  font-size: 18px;
+  word-break: break-word;
+  color: #134563;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 10px;
+  margin: 0;
+}
+
 /* Begin profile-container */
 /* placeholder mixin */
 /* how to use this variabile*/
