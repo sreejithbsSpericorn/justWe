@@ -125,6 +125,34 @@
             $(".create-add-form").show();
         });
 
+        //Poll Submission
+        $('body').on('click','.poll-submit-btn',function(){
+
+            var $this = $(this);
+            var post_id = $this.attr('data-post_id');
+            var option_id = $('.choosed-poll-option').val();
+
+            $.ajax({
+                url: base_url+'/posts/submitpoll',
+                type: 'POST',
+                data: {
+                    post_id,
+                    option_id,
+                    _token: CSRF_TOKEN
+                },
+                success: function (data) {
+                    if(data.status){
+                        $this.parent().parent().children('.poll-container').remove();
+                        $this.parent().parent().append(data.renderer);
+                        $this.remove();
+                    }
+                }
+            });
+
+        });
+
+        
+
         // Tags on change event
         $('body').on('change','#post_type',function(){
 

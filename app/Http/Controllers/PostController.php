@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Polling;
 use Illuminate\Http\Request;
 use App\User;
 use App\Post;
 use App\PostComment;
+use App\PostOption;
 use DB;
 use View;
 
@@ -14,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
-
+use App\Events\Comment;
 class PostController extends Controller
 {
     /**
@@ -137,6 +139,8 @@ class PostController extends Controller
         $comment = PostComment::create($input);
         $user = User::where('id',$input['user_id'])->select()->first();
         $comment['user'] = Auth::user()->name;
+        
+        event(new Comment('Hi there Pusher!'));
 
         return response(['status'=>true,'comment'=>$comment]);
     }
@@ -144,5 +148,24 @@ class PostController extends Controller
     public function createpoll()
     {
         return view('polls.create');
+    }
+
+    public function submitpoll(Request $request){
+
+        $getPoll = new Polling();
+        $getPoll->user_id = Auth::id();
+        $getPoll->post_id = $request->post_id;
+        $getPoll->post_options_id = $request->option_id;
+        $getPoll->save();
+
+        $post = Post::find($request->post_id);
+
+        $poll_options = PostOption::all();
+
+        $renderer = View::make('_includes.renderPollDisplay', compact('post', 'getPoll', 'poll_options'))->render();
+        $result['status']=true;
+        $result['renderer'] = $renderer;
+
+        return response($result);
     }
 }

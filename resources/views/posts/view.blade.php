@@ -79,7 +79,21 @@
 @stop
 
 @section('custom_scripts')
+<script src="//js.pusher.com/3.1/pusher.min.js"></script>
     <script>
+          var pusher = new Pusher('09143f0b85f847fa4a08', {
+    encrypted: true
+  });
+
+// Subscribe to the channel we specified in our Laravel Event
+var channel = pusher.subscribe('comment');
+
+// Bind a function to a Event (the full Laravel class)
+channel.bind('App\\Events\\Comment', function(data) {
+    // this is called when the event notification is received...
+//alert(1);
+
+});
         $(document).ready(function(){
 
             $(document).on('click','#addComment',function(){
