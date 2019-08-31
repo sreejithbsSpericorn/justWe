@@ -32,7 +32,9 @@
                 
               </div>
 
-              <button type="button" class="btn btn-sm btn-secondary mt-2" onclick="AddOptions()">Add more</button>
+              <button type="button" class="btn btn-sm btn-secondary mt-2" onclick="AddOptions()">Add more</button><br>
+              <label>Image</label>
+              <input type="file" name="image" class='titles form-control' accept="image/*"><br>
             </form>
             </div>
             <div class="modal-footer">

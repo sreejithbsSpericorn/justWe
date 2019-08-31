@@ -157,9 +157,20 @@ public function savepoll(Request $request)
  if($validator->fails()){
     
      print json_encode(array('status'=>'failed','message'=>$validator->errors()->first()));
+     exit();
  }
-  $data =  array('user_id' =>Auth::user()->id,'post_type' =>3, $input['title'],'title' => $input['title'],'expire_date' =>$input['expiry_date'] );
+ $data =  array('user_id' =>Auth::user()->id,'post_type' =>3, $input['title'],'title' => $input['title'],'expire_date' =>$input['expiry_date'] );
+
   $post = Post::create($data);
+ if ($request->hasFile('image')) {
+      $image = $request->file('image');
+      $name = time().'.'.$image->getClientOriginalExtension();
+      $destinationPath = public_path('/uploads/posts');
+      $image->move($destinationPath, $name);
+      $post->image = '/uploads/posts/' . $name;
+      $post->save();
+  }
+  
   $option = $request->input('option');
   
   foreach ($option as $value) {
