@@ -2,12 +2,10 @@
     <tr>
         <td class="topic-section">
             @if($post->post_type == "3")
-                <a  href="javascript:void(0);" class="newfeed-question">
+                <a  class="newfeed-question">
             @else
                 <a href="{{ route('posts.view', $post->id) }}" class="newfeed-question">
             @endif
-
-            <a href="{{ route('posts.view', $post->id) }}" class="newfeed-question">
                 <span class="type">[ {{ $post->posttype()->first()->type}} ] </span>
                 {{ $post->title }}
             </a>
@@ -116,13 +114,19 @@
 
         </td>
         <td class="d-replay">
-            <a>3</a>
+            <a>{{ $post->comments()->count() }}</a>
         </td>
         <!-- <td class="d-views">
             <a>36</a>
         </td> -->
         <td class="d-activity">
-            <a>3m</a>
+            <a>
+                @php
+                    if($post->comments()->get()->isNotEmpty()){
+                        echo $post->comments()->latest()->first()->created_at;
+                    }
+                @endphp
+            </a>
         </td>
     </tr>
 @endforeach
