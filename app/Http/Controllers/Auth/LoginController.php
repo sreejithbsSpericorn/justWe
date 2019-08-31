@@ -52,71 +52,77 @@ class LoginController extends Controller
 	}
 	public function login(Request $request) {
 		//dd($request->all());
-	   $this->validate($request, [
-		  'email' => 'required',
-		  'password' => 'required',
-	  ]);
+		$this->validate($request, [
+			'email' => 'required',
+			'password' => 'required',
+		]);
 
-	   $credentials = $request->only('email', 'password');
+		$credentials = $request->only('email', 'password');
 
-	   $credentials = array_add($credentials, 'active', 0);
-	   $credentials = array_add($credentials, 'user_type', [1,2]);
-
-
-	   if (Auth::attempt($credentials, $request->has('remember'))) {
-
-		  if(Auth::user()->user_type == 1){
-
-		   return redirect('users');
-	   }else if(Auth::user()->user_type == 2){
-		   return redirect('createComplaints');
-	   }else{
-		   return redirect('home');
-	   }
-   }else{
-	   return redirect('login')->withErrors(['These credentials do not match our records.']);
-	   return redirect::back()->withInput()->withFlashMessage('These credentials do not match our records.');
-   }
-}
-
-public function handleGoogleCallback()
-{
+		$credentials = array_add($credentials, 'active', 0);
+		$credentials = array_add($credentials, 'is_delete', 0);
+		$credentials = array_add($credentials, 'user_type', [1,2]);
 
 
-	$user = Socialite::driver('google')->stateless()->user();
+		if (Auth::attempt($credentials, $request->has('remember'))) {
+
+			if(Auth::user()->user_type == 1){
+
+				return redirect('users');
+			}else if(Auth::user()->user_type == 2){
+				return redirect('createComplaints');
+			}else{
+				return redirect('home');
+			}
+		}else{
+			return redirect('login')->withErrors(['These credentials do not match our records.']);
+			return redirect::back()->withInput()->withFlashMessage('These credentials do not match our records.');
+		}
+	}
+
+	public function handleGoogleCallback()
+	{
+
+
+		$user = Socialite::driver('google')->stateless()->user();
 // only allow people with @company.com to login
-	if(explode("@", $user->email)[1] !== 'spericorn.com'){
+		if(explode("@", $user->email)[1] !== 'spericorn.com'){
 
-	   return redirect('login')->withErrors(['domain not valid']);
-   }
-
-
-   $finduser = User::where('google_id', $user->id)->first();
+			return redirect('login')->withErrors(['domain not valid']);
+		}
 
 
-   if($finduser){
-
-	Auth::login($finduser,True);
-
-	return  redirect('home');
-
-}else{
+		$finduser = User::where('google_id', $user->id)->first();
 
 
-	$newUser = User::create([
-		'name' => $user->name,
-		'email' => $user->email,
-		'google_id'=> $user->id
-	]);
-	event(new UserListing('Hi there Pusher!'));
-	Auth::login($newUser,True);
+		if($finduser){
+			if($finduser->is_delete == 0 && $finduser->active == 0){
+				Auth::login($finduser,True);
+
+			    return  redirect('home');
+			}else{
+				return  redirect('/')->withErrors(['This user is Deactivated']);
+			}
+
+			
+
+		}else{
+
+
+			$newUser = User::create([
+				'name' => $user->name,
+				'email' => $user->email,
+				'google_id'=> $user->id
+			]);
+			event(new UserListing('Hi there Pusher!'));
+			Auth::login($newUser,True);
 
 
 
 
-	return  redirect('home');
-}
+			return  redirect('home');
+		}
 
 
-}
+	}
 }
