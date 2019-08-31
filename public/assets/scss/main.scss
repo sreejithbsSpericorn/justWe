@@ -1,0 +1,672 @@
+/* placeholder mixin */
+@mixin placeholder {
+  ::-webkit-input-placeholder {
+    @content
+  }
+
+  :-moz-placeholder {
+    @content
+  }
+
+  ::-moz-placeholder {
+    @content
+  }
+
+  :-ms-input-placeholder {
+    @content
+  }
+
+}
+
+
+.sidebar-wrapper{
+	 background: #023554;
+  background: -moz-linear-gradient(-45deg, #023354 0%, #02435f 24%, #006478 81%, #006f80 100%);
+  background: -webkit-gradient(left top, right bottom, color-stop(0%, #023354), color-stop(24%, #02435f), color-stop(81%, #006478), color-stop(100%, #006f80));
+  background: -webkit-linear-gradient(-45deg, #023354 0%, #02435f 24%, #006478 81%, #006f80 100%);
+  background: -o-linear-gradient(-45deg, #023354 0%, #02435f 24%, #006478 81%, #006f80 100%);
+  background: -ms-linear-gradient(-45deg, #023354 0%, #02435f 24%, #006478 81%, #006f80 100%);
+  background: -webkit-linear-gradient(315deg, #023354 0%, #02435f 24%, #006478 81%, #006f80 100%);
+  background: -o-linear-gradient(315deg, #023354 0%, #02435f 24%, #006478 81%, #006f80 100%);
+  background: linear-gradient(135deg, #023354 0%, #02435f 24%, #006478 81%, #006f80 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#023354', endColorstr='#006f80', GradientType=1 );
+}
+
+
+.sidebar .logo {
+    background: #fff;
+    padding: 10px 0;
+}
+.sidebar .logo .simple-text{
+	text-align: left; padding-left: 15px;
+}
+
+.sidebar .logo{
+	background: #fff; 
+}
+.sidebar .logo img {
+    height: 80px;
+}
+.sidebar .nav li > a{
+	margin: 3px 0px; border-radius: 0;
+}
+
+.sidebar .nav li.active > a{
+	background: #3ab34a; 
+}
+
+.sidebar .nav li > a{
+	color:#fff;
+}
+.sidebar .nav li:hover > a{
+	background-color: rgb(1, 89, 111);
+    opacity: 1;
+    color: #fff;
+}
+
+.top_nav_con .navbar-brand{
+	        color: #015169; font-weight: 500; text-transform: uppercase;
+}
+
+.navbar-default {
+    background-color: rgba(255, 255, 255, 0.96);
+    border-bottom: 1px solid rgba(2, 61, 90, 0.33);
+}
+
+.cstm-frm{
+
+  
+
+}
+
+.forms{
+	     border-radius:4px;
+       border: 1px solid #d0dae5;
+      padding:30px 35px;
+      background: #fff;
+.place-holder, .input-holder{
+  position: relative;
+}
+
+ @include placeholder{
+      opacity: 1;color: #d4d4d4;
+    }
+
+
+.cnt{
+	padding-top: 15px;     padding-bottom:10px; margin-bottom: 5px;
+	 p{
+  	 font:15px/23px "Roboto","Helvetica Neue",Arial,sans-serif;   color: #757575;
+  }
+}
+
+.btn-01{
+	    display: inline-block;
+    margin: 15px 10px 0 auto;
+    width: auto;
+    float: right;
+}
+
+.header {
+	h4{     font: 400 23px/23px "Roboto","Helvetica Neue",Arial,sans-serif;
+		    margin: 0px 0 30px; border-bottom: 1px solid #d0dae5; padding-bottom: 15px;     color: #015169;
+	}
+
+
+}
+
+label{
+   font:15px/27px "Roboto","Helvetica Neue",Arial,sans-serif; color: #333;  text-transform: capitalize;
+}
+
+  input[type="text"], input[type="password"] , input[type="email"], input[type="number"], input[type="tel"], input[type="url"],
+  textarea{
+    font:15px/23px;
+    color: #333;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    height:42px;
+    padding: 9px 20px;
+    border-radius:4px;
+    vertical-align: middle;
+    background-color: #fff;
+    background-repeat: no-repeat; 
+    background-position: right center;
+    border: 1px solid #d0dae5;
+    outline: none;
+    display: block;
+    width: 100%;
+    margin-bottom:18px;
+
+
+}
+textarea{
+  resize: none; height:200px; padding-top:20px;
+}
+
+
+.sl-bx {
+  width: 100%;
+  position: relative;
+}
+.sl-bx select {
+  
+  width:100%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+     padding: 9px 20px;
+    font: 500 14px/23px;
+    color: #333;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    height: 40px;
+    border-radius:4px;
+    vertical-align: middle;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #e3eef3;
+    background-repeat: no-repeat;
+    background-position: right center;
+    outline: none;
+    display: block;
+    margin-bottom: 15px;
+-webkit-box-shadow: 0px -2px 0px 1px rgb(229, 232, 235);
+-moz-box-shadow: 0px -2px 0px 1px rgb(229, 232, 235);
+box-shadow: 0px -2px 0px 1px rgb(229, 232, 235);
+
+}
+.sl-bx::after{
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-bottom: 2px solid #b1b4b6;
+    border-right: 2px solid #b1b4b6;
+    content: "";
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transition: border-color 0.2s ease;
+    right: 15px;
+    top: 15px;
+    pointer-events: none;
+}
+
+
+}
+
+.fil-otr{
+	 border: 1px solid #d0dae5;  border-radius:4px;   height: 42px;
+       padding: 4px 0px 0 20px;     margin-bottom: 18px; position: relative;
+
+ 
+
+}
+
+
+#file-upload {
+  position: absolute;
+  left: -9999px;
+}
+
+label[for="file-upload"] {
+    padding: 10px;  font-weight: 500;   height: 33px; line-height: 15px;
+    width: 85px; position: absolute; right: 10px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    display: inline-block;
+    background: #b5b5b5;
+    cursor: pointer;
+  text-align: center;
+  color: #fff;
+}
+label[for="file-upload"]:hover {
+      background: #3ab34a;
+}
+
+#filename {
+    text-overflow:ellipsis;
+    float: left;
+     width: 140px; line-height: 33px;
+  white-space: nowrap;   color:#d4d4d4;
+  overflow: hidden;
+ 
+}
+
+
+
+
+.radio-btn01 {
+    display: block;
+    position: relative;
+    padding-left: 35px; margin-top: 15px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font:16px/23px "Roboto","Helvetica Neue",Arial,sans-serif; text-transform: capitalize;
+    -webkit-user-select: none; color: #757575;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.radio-btn01 input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.radio-btn01:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.radio-btn01 input:checked ~ .checkmark {
+    background-color: #3ab34a;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.radio-btn01 input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.radio-btn01 .checkmark:after {
+ 	top: 6px;
+	left: 6px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: white;
+}
+
+.tabContent {
+    display:none;
+}
+.back{
+	position: relative;
+	    background-color: #023d5a !important; border-color: #023d5a !important; padding: 8px 10px; font-size: 20px !important;
+    color: #FFFFFF;
+    &:hover{
+    	    background-color: #036171 !important; border-color: #036171 !important;
+    }
+	&:before{
+		content: "\f177";
+	}
+}
+
+.sidebar{
+	box-shadow: 2px 0px 3px 0px rgba(0,0,0,0.15);
+    z-index: 5;
+}
+.sidebar .sidebar-wrapper{
+	box-shadow: none;
+}
+.sidebar .nav p{
+	font-weight: 500;
+}
+
+.navbar .navbar-nav > li{
+	border-left: 1px solid #eee;
+}
+.navbar .navbar-nav > li:last-child{
+	border-right: 1px solid #eee;
+}
+
+@media (max-width: 1199px){
+	.forms input[type="text"], .forms input[type="password"], .forms input[type="email"], .forms input[type="number"], .forms input[type="tel"], .forms input[type="url"], .forms textarea{
+		height: 38px;
+	}
+
+	.fil-otr{
+		height: 38px;     padding: 2px 0px 0 20px;
+	}
+label[for="file-upload"]{
+	right: 2px;
+}
+
+.forms .cnt {
+    padding-top: 9px;
+    }
+  .sidebar .logo {
+
+  	padding: 5px 0;
+
+  	img{
+    height: 60px;
+  	}
+}
+}
+
+.daterangepicker td.active, .daterangepicker td.active:hover {
+    background-color: #3ab34a !important;
+    border-color: transparent;
+    color: #fff;
+}
+
+.act{
+  float: right;
+}
+.cstm-hdr{
+
+
+.add-nw-btn{
+      display: inline-block;
+}
+
+.grn-bnt{
+      background: #3ab34a !important;
+      border-color: #3ab34a !important;
+      &:hover{
+        background-color: #049F0C !important;  border-color: #049F0C !important;
+      }
+}
+
+.b_a_t{
+  color: #015169 !important;
+}
+
+.d_i_b {
+  
+    border: 1px solid #d0dae5;
+}
+}
+
+
+.custm-table{
+  thead {
+    background: #fff;  
+  }
+  .table{
+    margin-top: 25px; 
+  }
+  .table > thead > tr > th{ 
+     
+    border-bottom-width: 2px;
+    border-color:#f1f1f1 !important;
+    padding: 23px 0px 15px 0;  
+    border-top: 1px solid #ddd !important;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #023b5a;
+    font-weight: 500;
+
+  }
+
+  .table.table_b_b>tbody>tr>td{
+           border-top: 2px solid #fafcfd;
+  }
+  table.table_b_b > tbody > tr > td {
+        padding: 11px 8px 4px 8px;
+}
+
+.tb_d_con .dropdown-toggle{
+  text-shadow: none;
+}
+.pe-7s-more{
+ 
+}
+ 
+  .pe-7s-more:before {
+    content: "\e632";
+    color: #c7c7c7;
+    font-size: 35px;
+}
+.n_bg_boxs .accounts_o:before, .n_bg_boxs .accounts_o:after {
+  left:55px !important;
+}
+.checkbox .cr .cr-icon {
+    color: #3ab34a;
+    line-height: 18px;
+    font-size: 11px;
+  }
+}
+
+.pagination>.active a{
+    z-index: 3;
+    color: #fff;
+       background-color: #3ab34a !important;
+    border-color: #03a1c7;
+}
+
+.cstm-mrgn{
+  margin-top: 80px;
+}
+
+.slt {
+border: 1px solid #d0dae5; margin-bottom: 25px;
+}
+
+.tb_d_con .dropdown-toggle{
+      font-size: 13px;
+}
+
+
+.btn-02{
+  background:#b1b1b1!important; border-color: #b1b1b1!important;
+
+  &:hover{
+     background: #949494!important; border-color: #949494 !important;
+  }
+}
+
+
+@media(max-width: 1399px){
+
+
+label[for=file-upload]{
+  line-height: 21px !important;
+}
+
+
+
+
+
+
+
+
+
+.main-panel-cstm{
+  .content{
+    padding: 15px 15px;
+  }
+}
+.sidebar .sidebar-wrapper{
+      width: 223px !important;
+} 
+
+.sidebar{ 
+    width: 223px;
+}
+
+.sidebar:after{
+  content: ""; display: none;
+}
+
+.sidebar:before{
+  background: none;
+}
+
+
+.main-panel {
+    position: relative;
+    z-index: 2;
+    float: right;
+    width: calc(100% - 223px);
+}
+
+.form-control {
+    height: 37px;
+    font-size: 12px !important;
+}
+
+
+
+
+
+
+
+
+  .forms label {
+    font: 13px/23px "Roboto","Helvetica Neue",Arial,sans-serif;
+    margin-bottom: 2px;
+}
+
+  .pe-7s-search:before {
+    content: "\e618";
+    font-size: 15px;
+    top: -2px;
+    position: relative;
+}
+  .custm-table .table>thead>tr>th{
+    font-size: 8.5px;        padding: 12px 0px 6px 0;
+  }
+  table .checkbox .cr{
+    top: 5px;
+  }
+
+  .custm-table table.table_b_b>tbody>tr>td {
+    padding: 5px 8px 1px 8px;
+}
+.table.table_b_b>tbody>tr>td{
+  font-size: 10px;
+}
+.custm-table .pe-7s-more:before {
+    content: "\e632";
+    color: #c7c7c7;
+    font-size: 20px;
+}
+.tb_d_con .dropdown-toggle {
+    font-size: 9px;
+}
+table .checkbox .cr {
+    width: 13px;
+    height: 13px;
+}
+.fa-check:before {
+    font-size: 8px;
+    top: -4px;
+    left: -3px;
+    position: relative;
+}
+.form-control {
+    height: 34px;
+    font-size: 10px;
+}
+.cstm-hdr .grn-bnt{
+  padding: 4px 13px; font-size: 12px;
+}
+.custm-table .table {
+    margin-top: 15px;
+}
+
+
+
+
+.forms input[type=email], .forms input[type=number], .forms input[type=password],
+ .forms input[type=tel], .forms input[type=text], .forms input[type=url], .forms textarea, #filename, label[for=file-upload]{
+  font-size: 12px; right: 1px; padding: 9px 11px;
+}
+#filename{
+
+line-height: 12px;
+}
+
+
+.forms input[type=email], .forms input[type=number], .forms input[type=password], .forms input[type=tel], .forms input[type=text], .forms input[type=url], .forms textarea{
+  height: 33px; margin-bottom: 15px;
+}
+
+
+.fil-otr{
+   height:33px;     padding: 1px 0px 3px 2px; margin-bottom:15px;
+}
+label[for=file-upload]{
+  height: 29px;     padding: 5px 0;
+}
+
+
+.forms .header h4 {
+    font: 400 17px/23px "Roboto","Helvetica Neue",Arial,sans-serif;     padding-bottom: 8px;     margin: 0px 0 18px;
+  }
+
+.forms .btn-01{
+      padding: 3px 11px; font-size: 13px;     margin: 0px 3px 0 auto;
+}
+
+
+
+
+.navbar .navbar-brand {
+    font-size: 16px;
+}
+
+.forms {
+
+    padding: 20px 25px;
+  }
+
+
+.dt-dfdfh{
+  p {
+    font-size: 13 px;
+    line-height: 1.5;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+.checkbox .cr{
+      border: 1px solid #d6d6d6;
+}
+
+.custm-table .pe-7s-more:before{
+  font-size: 29px; 
+}
+
+
